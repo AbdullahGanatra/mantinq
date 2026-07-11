@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Details - MaintainIQ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">
+                <i class="fas fa-qrcode"></i>
+                <span>MaintainIQ</span>
+            </a>
+            <button class="sidebar-close d-lg-none" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="assets.html" class="nav-item active">
+                <i class="fas fa-box"></i>
+                <span>Assets</span>
+            </a>
+            <a href="maintenance.html" class="nav-item">
+                <i class="fas fa-tools"></i>
+                <span>Maintenance</span>
+            </a>
+            <a href="history.html" class="nav-item">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn btn-outline-danger w-100 rounded-pill" id="resetDataBtn">
+                <i class="fas fa-redo me-2"></i>Reset Demo Data
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <button class="sidebar-toggle d-lg-none" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-title">
+                <h4 class="mb-0 fw-bold">Asset Details</h4>
+                <small class="text-muted">View complete asset information</small>
+            </div>
+            <div class="topbar-actions">
+                <a href="assets.html" class="btn btn-outline-secondary rounded-pill">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Assets
+                </a>
+            </div>
+        </header>
+
+        <!-- Asset Details Content -->
+        <div class="dashboard-content">
+            <div class="row g-4">
+                <!-- Asset Info Card -->
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <div class="card-header-custom">
+                            <h5 class="mb-0 fw-bold"><i class="fas fa-info-circle me-2 text-primary"></i>Asset Information</h5>
+                        </div>
+                        <div class="card-body-custom">
+                            <div class="text-center mb-4">
+                                <div class="asset-icon-large bg-primary-soft mx-auto mb-3">
+                                    <i class="fas fa-box text-primary fa-2x"></i>
+                                </div>
+                                <h4 class="fw-bold mb-1" id="detailAssetName">-</h4>
+                                <span class="badge bg-primary rounded-pill" id="detailAssetCode">-</span>
+                            </div>
+                            <div class="asset-details-list">
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-tag me-2 text-muted"></i>Category</span>
+                                    <span class="detail-value" id="detailCategory">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-map-marker-alt me-2 text-muted"></i>Location</span>
+                                    <span class="detail-value" id="detailLocation">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-calendar me-2 text-muted"></i>Purchase Date</span>
+                                    <span class="detail-value" id="detailPurchaseDate">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-circle me-2 text-muted"></i>Status</span>
+                                    <span class="detail-value" id="detailStatus">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-clock me-2 text-muted"></i>Created</span>
+                                    <span class="detail-value" id="detailCreated">-</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <h6 class="fw-semibold mb-2">Description</h6>
+                                <p class="text-muted small" id="detailDescription">-</p>
+                            </div>
+                            <div class="d-grid gap-2 mt-4">
+                                <button class="btn btn-primary rounded-pill" id="generateQrBtn">
+                                    <i class="fas fa-qrcode me-2"></i>Generate QR Code
+                                </button>
+                                <a id="publicPageLink" class="btn btn-outline-primary rounded-pill" target="_blank">
+                                    <i class="fas fa-external-link-alt me-2"></i>Public Asset Page
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR & Stats -->
+                <div class="col-lg-4">
+                    <div class="dashboard-card mb-4">
+                        <div class="card-header-custom">
+                            <h5 class="mb-0 fw-bold"><i class="fas fa-qrcode me-2 text-primary"></i>QR Code</h5>
+                        </div>
+                        <div class="card-body-custom text-center">
+                            <div id="detailQrContainer" class="mb-3">
+                                <div class="qr-placeholder">
+                                    <i class="fas fa-qrcode fa-4x text-muted"></i>
+                                    <p class="text-muted mt-2">Click "Generate QR Code" to create</p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center gap-2" id="qrActions" style="display: none !important;">
+                                <button class="btn btn-outline-primary btn-sm rounded-pill" id="downloadDetailQr">
+                                    <i class="fas fa-download me-1"></i>Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header-custom">
+                            <h5 class="mb-0 fw-bold"><i class="fas fa-chart-pie me-2 text-info"></i>Quick Stats</h5>
+                        </div>
+                        <div class="card-body-custom">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="mini-stat text-center p-3 rounded-3 bg-warning-soft">
+                                        <h4 class="fw-bold text-warning mb-1" id="detailPendingIssues">0</h4>
+                                        <small class="text-muted">Pending</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mini-stat text-center p-3 rounded-3 bg-info-soft">
+                                        <h4 class="fw-bold text-info mb-1" id="detailInProgressIssues">0</h4>
+                                        <small class="text-muted">In Progress</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mini-stat text-center p-3 rounded-3 bg-success-soft">
+                                        <h4 class="fw-bold text-success mb-1" id="detailResolvedIssues">0</h4>
+                                        <small class="text-muted">Resolved</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mini-stat text-center p-3 rounded-3 bg-primary-soft">
+                                        <h4 class="fw-bold text-primary mb-1" id="detailMaintenanceCount">0</h4>
+                                        <small class="text-muted">Maintenance</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issues & History -->
+                <div class="col-lg-4">
+                    <div class="dashboard-card mb-4">
+                        <div class="card-header-custom d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 fw-bold"><i class="fas fa-exclamation-triangle me-2 text-warning"></i>Issues</h5>
+                        </div>
+                        <div class="card-body-custom p-0">
+                            <div class="list-group list-group-flush" id="detailIssuesList">
+                                <!-- Populated by JS -->
+                            </div>
+                            <div id="noIssuesMessage" class="text-center py-4">
+                                <i class="fas fa-check-circle text-success fa-2x mb-2"></i>
+                                <p class="text-muted small mb-0">No issues reported</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header-custom d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 fw-bold"><i class="fas fa-history me-2 text-info"></i>Recent History</h5>
+                            <a href="history.html" class="btn btn-sm btn-outline-info rounded-pill">View All</a>
+                        </div>
+                        <div class="card-body-custom p-0">
+                            <div class="timeline-small" id="detailHistoryTimeline">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- QR Modal -->
+    <div class="modal fade" id="detailQrModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold"><i class="fas fa-qrcode me-2 text-primary"></i>Asset QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="modalQrContainer" class="mb-3"></div>
+                    <p class="text-muted small mb-1" id="modalQrAssetName"></p>
+                    <p class="text-primary fw-bold" id="modalQrAssetCode"></p>
+                    <div class="d-flex justify-content-center gap-2 mt-3">
+                        <a id="modalOpenAssetPage" class="btn btn-primary btn-sm rounded-pill" target="_blank">
+                            <i class="fas fa-external-link-alt me-1"></i>Open Page
+                        </a>
+                        <button id="modalDownloadQr" class="btn btn-outline-primary btn-sm rounded-pill">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/asset-details.js"></script>
+</body>
+</html>

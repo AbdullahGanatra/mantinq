@@ -1,0 +1,274 @@
+/* ============================================
+   MaintainIQ - Responsive Styles
+   ============================================ */
+
+/* Extra Large Devices */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}
+
+/* Large Devices */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .sidebar {
+        width: 240px;
+    }
+
+    .main-content {
+        margin-left: 240px;
+    }
+}
+
+/* Medium Devices - Tablets */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .hero-section .display-3 {
+        font-size: 2.75rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .workflow-step {
+        padding: 1.5rem 0.5rem;
+    }
+
+    .dashboard-content {
+        padding: 1.25rem;
+    }
+}
+
+/* Small Devices - Mobile Landscape */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .hero-section .display-3 {
+        font-size: 2.25rem;
+    }
+
+    .stat-item h3 {
+        font-size: 1.75rem;
+    }
+
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+
+    .feature-card h4 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Extra Small Devices - Mobile Portrait */
+@media (max-width: 575.98px) {
+    .hero-section .display-3 {
+        font-size: 1.75rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+
+    .stat-item h3 {
+        font-size: 1.5rem;
+    }
+
+    .feature-card {
+        padding: 1.25rem;
+    }
+
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .workflow-step {
+        padding: 1rem 0;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .step-icon i {
+        font-size: 1.5rem;
+    }
+
+    .benefit-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 1rem;
+    }
+
+    .dashboard-content {
+        padding: 0.75rem;
+    }
+
+    .topbar {
+        padding: 0 0.75rem;
+        height: 60px;
+    }
+
+    .topbar-title h4 {
+        font-size: 1.1rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+
+    .stat-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+
+    .stat-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .table-responsive {
+        font-size: 0.8rem;
+    }
+
+    .table thead th,
+    .table tbody td {
+        padding: 0.5rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    .card-header-custom {
+        padding: 0.875rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .card-body-custom {
+        padding: 0.875rem;
+    }
+
+    .timeline {
+        padding-left: 1.5rem;
+    }
+
+    .timeline-dot {
+        left: -1.5rem;
+        width: 14px;
+        height: 14px;
+    }
+
+    .quick-action-item {
+        padding: 0.75rem;
+    }
+
+    .quick-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    .asset-icon-large {
+        width: 60px;
+        height: 60px;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .public-page .card-body {
+        padding: 1rem;
+    }
+
+    .phone-mockup {
+        width: 220px;
+        height: 400px;
+    }
+
+    .mockup-qr i {
+        font-size: 80px;
+    }
+
+    .floating-card {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
+
+    .floating-card i {
+        font-size: 1rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar,
+    .topbar,
+    .sidebar-toggle,
+    .btn,
+    .modal {
+        display: none !important;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+    }
+
+    .dashboard-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+}
+
+/* Dark mode support hint */
+@media (prefers-color-scheme: dark) {
+    /* Keeping light theme as default per design requirements */
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .btn-primary {
+        border: 2px solid var(--primary-dark);
+    }
+
+    .form-control,
+    .form-select {
+        border-width: 2px;
+    }
+}

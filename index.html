@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaintainIQ - AI-Powered QR Maintenance & Asset History Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-qrcode me-2"></i>MaintainIQ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="assets.html">Assets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="history.html">History</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary btn-sm rounded-pill px-4" href="dashboard.html">
+                            <i class="fas fa-rocket me-2"></i>Get Started
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="row align-items-center min-vh-100 pt-5">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <div class="badge bg-white text-primary mb-3 px-3 py-2 rounded-pill shadow-sm">
+                            <i class="fas fa-award me-2"></i>SMIT Final Hackathon - Track C
+                        </div>
+                        <h1 class="display-3 fw-bold mb-4">
+                            AI-Powered <span class="text-gradient">QR Maintenance</span> & Asset History Platform
+                        </h1>
+                        <p class="lead mb-4 text-white-75">
+                            Transform your physical assets into digital identities. Generate QR codes, track maintenance history, and manage issues — all in one powerful platform.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="dashboard.html" class="btn btn-light btn-lg rounded-pill px-5 fw-semibold shadow-lg">
+                                <i class="fas fa-play me-2"></i>Launch App
+                            </a>
+                            <a href="#features" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-semibold">
+                                <i class="fas fa-info-circle me-2"></i>Learn More
+                            </a>
+                        </div>
+                        <div class="mt-5 d-flex gap-4">
+                            <div class="stat-item">
+                                <h3 class="fw-bold mb-0" id="hero-assets">0</h3>
+                                <small class="text-white-75">Assets</small>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="fw-bold mb-0" id="hero-issues">0</h3>
+                                <small class="text-white-75">Issues</small>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="fw-bold mb-0" id="hero-resolved">0</h3>
+                                <small class="text-white-75">Resolved</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="hero-visual">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-qrcode"></i>
+                            <span>QR Generated</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Issue Resolved</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="fas fa-tools"></i>
+                            <span>Maintenance</span>
+                        </div>
+                        <div class="hero-illustration">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <div class="mockup-header">
+                                        <i class="fas fa-arrow-left"></i>
+                                        <span>Asset #AC-001</span>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </div>
+                                    <div class="mockup-qr">
+                                        <i class="fas fa-qrcode"></i>
+                                    </div>
+                                    <div class="mockup-info">
+                                        <div class="mockup-row">
+                                            <span>Status</span>
+                                            <span class="badge bg-success">Active</span>
+                                        </div>
+                                        <div class="mockup-row">
+                                            <span>Location</span>
+                                            <span>Building A</span>
+                                        </div>
+                                    </div>
+                                    <button class="mockup-btn">Report Issue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <span class="text-primary fw-semibold text-uppercase ls-2">Features</span>
+                <h2 class="display-5 fw-bold mt-2">Everything You Need</h2>
+                <p class="text-muted lead mx-auto" style="max-width: 600px;">
+                    A complete maintenance management ecosystem built for modern operations.
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-primary-soft">
+                            <i class="fas fa-qrcode text-primary"></i>
+                        </div>
+                        <h4>QR Code Generation</h4>
+                        <p class="text-muted">Every asset gets a unique QR code. Scan to view details, report issues, or check history instantly.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-success-soft">
+                            <i class="fas fa-clipboard-list text-success"></i>
+                        </div>
+                        <h4>Issue Management</h4>
+                        <p class="text-muted">Track issues from reporting to resolution with a clear status workflow: Pending → In Progress → Resolved.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-warning-soft">
+                            <i class="fas fa-tools text-warning"></i>
+                        </div>
+                        <h4>Maintenance Records</h4>
+                        <p class="text-muted">Log maintenance activities with technician details, parts used, costs, and comprehensive notes.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-info-soft">
+                            <i class="fas fa-history text-info"></i>
+                        </div>
+                        <h4>Asset History</h4>
+                        <p class="text-muted">Automatic timeline tracking of every action performed on an asset, from creation to resolution.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-danger-soft">
+                            <i class="fas fa-search text-danger"></i>
+                        </div>
+                        <h4>Search & Filter</h4>
+                        <p class="text-muted">Powerful search and filtering capabilities across assets, issues, and maintenance records.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-purple-soft">
+                            <i class="fas fa-mobile-alt text-purple"></i>
+                        </div>
+                        <h4>Public Asset Page</h4>
+                        <p class="text-muted">Share asset pages publicly. Anyone can scan a QR code and report issues without logging in.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-5 bg-light">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <span class="text-primary fw-semibold text-uppercase ls-2">Workflow</span>
+                <h2 class="display-5 fw-bold mt-2">How MaintainIQ Works</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="workflow-step text-center">
+                        <div class="step-number">1</div>
+                        <div class="step-icon"><i class="fas fa-plus-circle"></i></div>
+                        <h5>Create Asset</h5>
+                        <p class="text-muted small">Register your physical assets with details and categories.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="workflow-step text-center">
+                        <div class="step-number">2</div>
+                        <div class="step-icon"><i class="fas fa-qrcode"></i></div>
+                        <h5>Generate QR</h5>
+                        <p class="text-muted small">Auto-generate unique QR codes for each asset.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="workflow-step text-center">
+                        <div class="step-number">3</div>
+                        <div class="step-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <h5>Report Issue</h5>
+                        <p class="text-muted small">Scan QR to report issues with priority and details.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="workflow-step text-center">
+                        <div class="step-number">4</div>
+                        <div class="step-icon"><i class="fas fa-check-double"></i></div>
+                        <h5>Resolve & Track</h5>
+                        <p class="text-muted small">Update status, add maintenance notes, track history.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <span class="text-primary fw-semibold text-uppercase ls-2">Benefits</span>
+                    <h2 class="display-5 fw-bold mt-2 mb-4">Why Choose MaintainIQ?</h2>
+                    <div class="benefit-item d-flex mb-4">
+                        <div class="benefit-icon me-4">
+                            <i class="fas fa-bolt text-warning"></i>
+                        </div>
+                        <div>
+                            <h5>Lightning Fast</h5>
+                            <p class="text-muted mb-0">Instant QR scanning and real-time status updates with zero latency.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item d-flex mb-4">
+                        <div class="benefit-icon me-4">
+                            <i class="fas fa-shield-alt text-success"></i>
+                        </div>
+                        <div>
+                            <h5>Reliable & Secure</h5>
+                            <p class="text-muted mb-0">All data stored locally with persistent localStorage management.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item d-flex mb-4">
+                        <div class="benefit-icon me-4">
+                            <i class="fas fa-chart-line text-primary"></i>
+                        </div>
+                        <div>
+                            <h5>Complete Visibility</h5>
+                            <p class="text-muted mb-0">Full audit trail of every asset's lifecycle from creation to retirement.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="benefits-visual">
+                        <div class="dashboard-preview">
+                            <div class="preview-header">
+                                <div class="preview-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span class="text-muted small">Dashboard Preview</span>
+                            </div>
+                            <div class="preview-body">
+                                <div class="preview-row">
+                                    <div class="preview-card bg-primary-soft">
+                                        <i class="fas fa-box text-primary"></i>
+                                        <span>5 Assets</span>
+                                    </div>
+                                    <div class="preview-card bg-warning-soft">
+                                        <i class="fas fa-clock text-warning"></i>
+                                        <span>3 Pending</span>
+                                    </div>
+                                </div>
+                                <div class="preview-row">
+                                    <div class="preview-card bg-success-soft">
+                                        <i class="fas fa-check text-success"></i>
+                                        <span>2 Resolved</span>
+                                    </div>
+                                    <div class="preview-card bg-info-soft">
+                                        <i class="fas fa-wrench text-info"></i>
+                                        <span>4 Records</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container text-center py-5">
+            <h2 class="display-5 fw-bold text-white mb-4">Ready to Transform Your Maintenance?</h2>
+            <p class="lead text-white-75 mb-4 mx-auto" style="max-width: 600px;">
+                Join the future of asset management. Start tracking, maintaining, and optimizing your assets today.
+            </p>
+            <a href="dashboard.html" class="btn btn-light btn-lg rounded-pill px-5 fw-semibold shadow-lg">
+                <i class="fas fa-rocket me-2"></i>Launch MaintainIQ
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <a class="navbar-brand text-white mb-3 d-inline-block" href="index.html">
+                        <i class="fas fa-qrcode me-2"></i>MaintainIQ
+                    </a>
+                    <p class="text-white-50">
+                        AI-Powered QR Maintenance & Asset History Platform built for the SMIT Final Hackathon - Track C.
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="text-white mb-3">Platform</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="dashboard.html" class="text-white-50 text-decoration-none">Dashboard</a></li>
+                        <li><a href="assets.html" class="text-white-50 text-decoration-none">Assets</a></li>
+                        <li><a href="history.html" class="text-white-50 text-decoration-none">History</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="text-white mb-3">Features</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50 text-decoration-none">QR Codes</a></li>
+                        <li><a href="#" class="text-white-50 text-decoration-none">Issue Tracking</a></li>
+                        <li><a href="#" class="text-white-50 text-decoration-none">Maintenance</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h6 class="text-white mb-3">Hackathon</h6>
+                    <p class="text-white-50 small">
+                        <i class="fas fa-trophy text-warning me-2"></i>SMIT Final Hackathon<br>
+                        <i class="fas fa-code text-info me-2"></i>Track C - Frontend Only<br>
+                        <i class="fas fa-calendar text-success me-2"></i>2024
+                    </p>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center text-white-50 small">
+                <p class="mb-0"> MaintainIQ - SMIT Final Hackathon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

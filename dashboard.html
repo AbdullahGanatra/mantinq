@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MaintainIQ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">
+                <i class="fas fa-qrcode"></i>
+                <span>MaintainIQ</span>
+            </a>
+            <button class="sidebar-close d-lg-none" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="assets.html" class="nav-item">
+                <i class="fas fa-box"></i>
+                <span>Assets</span>
+            </a>
+            <a href="maintenance.html" class="nav-item">
+                <i class="fas fa-tools"></i>
+                <span>Maintenance</span>
+            </a>
+            <a href="history.html" class="nav-item">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn btn-outline-danger w-100 rounded-pill" id="resetDataBtn">
+                <i class="fas fa-redo me-2"></i>Reset Demo Data
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <button class="sidebar-toggle d-lg-none" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-title">
+                <h4 class="mb-0 fw-bold">Dashboard</h4>
+                <small class="text-muted">Overview of your maintenance operations</small>
+            </div>
+            <div class="topbar-actions">
+                <a href="assets.html" class="btn btn-primary rounded-pill">
+                    <i class="fas fa-plus me-2"></i>Add Asset
+                </a>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Stats Cards -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-primary-soft">
+                            <i class="fas fa-box text-primary"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="mb-0 fw-bold" id="totalAssets">0</h3>
+                            <p class="text-muted mb-0">Total Assets</p>
+                        </div>
+                        <div class="stat-trend text-success">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-warning-soft">
+                            <i class="fas fa-clock text-warning"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="mb-0 fw-bold" id="pendingIssues">0</h3>
+                            <p class="text-muted mb-0">Pending Issues</p>
+                        </div>
+                        <div class="stat-trend text-warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-success-soft">
+                            <i class="fas fa-check-circle text-success"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="mb-0 fw-bold" id="resolvedIssues">0</h3>
+                            <p class="text-muted mb-0">Resolved Issues</p>
+                        </div>
+                        <div class="stat-trend text-success">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-info-soft">
+                            <i class="fas fa-wrench text-info"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="mb-0 fw-bold" id="maintenanceRecords">0</h3>
+                            <p class="text-muted mb-0">Maintenance Records</p>
+                        </div>
+                        <div class="stat-trend text-info">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts & Recent Activity Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="dashboard-card">
+                        <div class="card-header-custom">
+                            <h5 class="mb-0 fw-bold"><i class="fas fa-chart-bar me-2 text-primary"></i>Asset Overview</h5>
+                        </div>
+                        <div class="card-body-custom">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="mini-chart">
+                                        <h6 class="text-muted mb-3">Issues by Status</h6>
+                                        <div class="progress-bars">
+                                            <div class="progress-item">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <small>Pending</small>
+                                                    <small class="fw-bold" id="pendingCount">0</small>
+                                                </div>
+                                                <div class="progress" style="height: 8px;">
+                                                    <div class="progress-bar bg-warning" id="pendingBar" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-item">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <small>In Progress</small>
+                                                    <small class="fw-bold" id="progressCount">0</small>
+                                                </div>
+                                                <div class="progress" style="height: 8px;">
+                                                    <div class="progress-bar bg-info" id="progressBar" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-item">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <small>Resolved</small>
+                                                    <small class="fw-bold" id="resolvedCount">0</small>
+                                                </div>
+                                                <div class="progress" style="height: 8px;">
+                                                    <div class="progress-bar bg-success" id="resolvedBar" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mini-chart">
+                                        <h6 class="text-muted mb-3">Assets by Category</h6>
+                                        <div id="categoryBreakdown" class="category-list">
+                                            <!-- Populated by JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <div class="card-header-custom">
+                            <h5 class="mb-0 fw-bold"><i class="fas fa-bolt me-2 text-warning"></i>Quick Actions</h5>
+                        </div>
+                        <div class="card-body-custom">
+                            <div class="quick-actions">
+                                <a href="assets.html" class="quick-action-item">
+                                    <div class="quick-icon bg-primary-soft">
+                                        <i class="fas fa-plus text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Add New Asset</h6>
+                                        <small class="text-muted">Create a new asset record</small>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted ms-auto"></i>
+                                </a>
+                                <a href="assets.html" class="quick-action-item">
+                                    <div class="quick-icon bg-success-soft">
+                                        <i class="fas fa-qrcode text-success"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Generate QR Codes</h6>
+                                        <small class="text-muted">Create QR for existing assets</small>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted ms-auto"></i>
+                                </a>
+                                <a href="maintenance.html" class="quick-action-item">
+                                    <div class="quick-icon bg-info-soft">
+                                        <i class="fas fa-clipboard-list text-info"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">View Issues</h6>
+                                        <small class="text-muted">Manage reported issues</small>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted ms-auto"></i>
+                                </a>
+                                <a href="history.html" class="quick-action-item">
+                                    <div class="quick-icon bg-warning-soft">
+                                        <i class="fas fa-history text-warning"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">View History</h6>
+                                        <small class="text-muted">Check activity timeline</small>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted ms-auto"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="dashboard-card">
+                        <div class="card-header-custom d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 fw-bold"><i class="fas fa-stream me-2 text-info"></i>Recent Activity</h5>
+                            <a href="history.html" class="btn btn-sm btn-outline-primary rounded-pill">View All</a>
+                        </div>
+                        <div class="card-body-custom p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Action</th>
+                                            <th>Asset</th>
+                                            <th>Details</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentActivityTable">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
