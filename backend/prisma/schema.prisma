@@ -1,0 +1,541 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id                   String                @id @default(uuid())
+  name                 String
+  slug                 String                @unique
+  description          String?
+  logo                 String?
+  website              String?
+  phone                String?
+  email                String?
+  address              String?
+  city                 String?
+  state                String?
+  country              String?
+  zipCode              String?
+  timezone             String                @default("UTC")
+  currency             String                @default("USD")
+  isActive             Boolean               @default(true)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  assets               Asset[]
+  auditLogs            AuditLog[]
+  buildings            Building[]
+  departments          Department[]
+  issues               Issue[]
+  maintenanceSchedules MaintenanceSchedule[]
+  notifications        Notification[]
+  reports              Report[]
+  users                User[]
+  workOrders           WorkOrder[]
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+model User {
+  id                           String                @id @default(uuid())
+  email                        String                @unique
+  password                     String
+  firstName                    String
+  lastName                     String
+  phone                        String?
+  avatar                       String?
+  role                         UserRole              @default(EMPLOYEE)
+  status                       UserStatus            @default(ACTIVE)
+  emailVerified                Boolean               @default(false)
+  lastLoginAt                  DateTime?
+  twoFactorEnabled             Boolean               @default(false)
+  organizationId               String
+  departmentId                 String?
+  createdAt                    DateTime              @default(now())
+  updatedAt                    DateTime              @updatedAt
+  activityLogs                 ActivityLog[]
+  createdAssets                Asset[]               @relation("CreatedBy")
+  auditLogs                    AuditLog[]
+  comments                     Comment[]
+  assignedIssues               Issue[]               @relation("IssueAssignedTo")
+  reportedIssues               Issue[]               @relation("ReportedBy")
+  assignedMaintenanceSchedules MaintenanceSchedule[] @relation("MaintenanceScheduleAssignedTo")
+  notifications                Notification[]        @relation("UserNotifications")
+  refreshTokens                RefreshToken[]
+  reports                      Report[]
+  department                   Department?           @relation(fields: [departmentId], references: [id])
+  organization                 Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assignedWorkOrders           WorkOrder[]           @relation("AssignedTo")
+  createdWorkOrders            WorkOrder[]           @relation("WorkOrderCreatedBy")
+
+  @@index([email])
+  @@index([organizationId])
+  @@index([role])
+  @@index([status])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+}
+
+model Department {
+  id             String       @id @default(uuid())
+  name           String
+  description    String?
+  color          String       @default("#2563EB")
+  organizationId String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  assets         Asset[]
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  users          User[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId])
+}
+
+model Building {
+  id             String       @id @default(uuid())
+  name           String
+  description    String?
+  address        String?
+  organizationId String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  floors         Floor[]
+
+  @@index([organizationId])
+}
+
+model Floor {
+  id          String   @id @default(uuid())
+  name        String
+  number      Int
+  description String?
+  buildingId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  building    Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  rooms       Room[]
+
+  @@unique([buildingId, number])
+  @@index([buildingId])
+}
+
+model Room {
+  id          String   @id @default(uuid())
+  name        String
+  number      String?
+  description String?
+  floorId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  assets      Asset[]
+  floor       Floor    @relation(fields: [floorId], references: [id], onDelete: Cascade)
+
+  @@unique([floorId, name])
+  @@index([floorId])
+}
+
+model AssetCategory {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  icon        String?
+  color       String   @default("#2563EB")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  assets      Asset[]
+}
+
+model Asset {
+  id                   String                @id @default(uuid())
+  name                 String
+  description          String?
+  model                String?
+  manufacturer         String?
+  serialNumber         String?
+  barcode              String?               @unique
+  qrCode               String?               @unique
+  purchaseDate         DateTime?
+  purchaseCost         Decimal?              @db.Decimal(10, 2)
+  warrantyExpiry       DateTime?
+  status               AssetStatus           @default(OPERATIONAL)
+  categoryId           String
+  departmentId         String?
+  roomId               String?
+  organizationId       String
+  createdById          String
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  category             AssetCategory         @relation(fields: [categoryId], references: [id])
+  createdBy            User                  @relation("CreatedBy", fields: [createdById], references: [id])
+  department           Department?           @relation(fields: [departmentId], references: [id])
+  organization         Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  room                 Room?                 @relation(fields: [roomId], references: [id])
+  history              AssetHistory[]
+  images               AssetImage[]
+  documents            Document[]
+  issues               Issue[]
+  maintenanceSchedules MaintenanceSchedule[]
+  workOrders           WorkOrder[]
+
+  @@index([organizationId])
+  @@index([categoryId])
+  @@index([status])
+  @@index([barcode])
+  @@index([qrCode])
+  @@index([departmentId])
+}
+
+model AssetImage {
+  id        String   @id @default(uuid())
+  url       String
+  publicId  String?
+  isPrimary Boolean  @default(false)
+  assetId   String
+  createdAt DateTime @default(now())
+  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
+}
+
+model Document {
+  id          String     @id @default(uuid())
+  name        String
+  url         String
+  publicId    String?
+  type        String
+  size        Int
+  assetId     String?
+  workOrderId String?
+  createdAt   DateTime   @default(now())
+  asset       Asset?     @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  workOrder   WorkOrder? @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
+  @@index([workOrderId])
+}
+
+model MaintenanceSchedule {
+  id              String          @id @default(uuid())
+  title           String
+  description     String?
+  type            MaintenanceType @default(PREVENTIVE)
+  priority        Priority        @default(MEDIUM)
+  frequency       String
+  interval        Int             @default(1)
+  startDate       DateTime
+  endDate         DateTime?
+  nextDueDate     DateTime
+  lastCompletedAt DateTime?
+  estimatedHours  Int?
+  estimatedCost   Decimal?        @db.Decimal(10, 2)
+  assetId         String
+  organizationId  String
+  assignedToId    String?
+  isActive        Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  asset           Asset           @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  assignedTo      User?           @relation("MaintenanceScheduleAssignedTo", fields: [assignedToId], references: [id])
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
+  @@index([organizationId])
+  @@index([nextDueDate])
+  @@index([isActive])
+}
+
+model WorkOrder {
+  id             String          @id @default(uuid())
+  woNumber       String          @unique
+  title          String
+  description    String?
+  type           MaintenanceType @default(CORRECTIVE)
+  priority       Priority        @default(MEDIUM)
+  status         WorkOrderStatus @default(PENDING)
+  scheduledDate  DateTime?
+  startedAt      DateTime?
+  completedAt    DateTime?
+  dueDate        DateTime?
+  estimatedHours Int?
+  actualHours    Int?
+  estimatedCost  Decimal?        @db.Decimal(10, 2)
+  actualCost     Decimal?        @db.Decimal(10, 2)
+  assetId        String
+  organizationId String
+  assignedToId   String?
+  createdById    String
+  issueId        String?         @unique
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  comments       Comment[]
+  documents      Document[]
+  asset          Asset           @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  assignedTo     User?           @relation("AssignedTo", fields: [assignedToId], references: [id])
+  createdBy      User            @relation("WorkOrderCreatedBy", fields: [createdById], references: [id])
+  issue          Issue?          @relation(fields: [issueId], references: [id])
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([assetId])
+  @@index([status])
+  @@index([assignedToId])
+  @@index([createdById])
+  @@index([dueDate])
+}
+
+model Issue {
+  id             String       @id @default(uuid())
+  issueNumber    String       @unique
+  title          String
+  description    String?
+  priority       Priority     @default(MEDIUM)
+  status         IssueStatus  @default(OPEN)
+  reportedAt     DateTime     @default(now())
+  resolvedAt     DateTime?
+  assetId        String
+  organizationId String
+  // Internal reporter (staff). Optional because public/anonymous reporters
+  // scan the QR code and report issues without logging in.
+  reportedById   String?
+  assignedToId   String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  // --- Public / QR reporter details (used when reportedById is null) ---
+  reporterName   String?
+  reporterEmail  String?
+  reporterPhone  String?
+  isPublicReport Boolean      @default(false)
+
+  // --- AI Issue Triage (section 6.1 of the brief) ---
+  category         String?
+  possibleCauses   String?
+  initialChecks    String?
+  recurringWarning String?
+  aiGenerated      Boolean  @default(false) // true if any field above came from AI
+  aiEdited         Boolean  @default(false) // true if the user edited the AI suggestion before saving
+  aiRaw            Json?    // raw AI response kept for audit/debugging
+
+  // --- Resolution ---
+  resolutionNote String? // mandatory before an issue can move to RESOLVED
+
+  comments       Comment[]
+  asset          Asset        @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  assignedTo     User?        @relation("IssueAssignedTo", fields: [assignedToId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  reportedBy     User?        @relation("ReportedBy", fields: [reportedById], references: [id])
+  images         IssueImage[]
+  workOrder      WorkOrder?
+
+  @@index([organizationId])
+  @@index([assetId])
+  @@index([status])
+  @@index([reportedById])
+  @@index([assignedToId])
+}
+
+model IssueImage {
+  id        String   @id @default(uuid())
+  url       String
+  publicId  String?
+  issueId   String
+  createdAt DateTime @default(now())
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+
+  @@index([issueId])
+}
+
+model Comment {
+  id          String     @id @default(uuid())
+  content     String
+  userId      String
+  workOrderId String?
+  issueId     String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  issue       Issue?     @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workOrder   WorkOrder? @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
+
+  @@index([workOrderId])
+  @@index([issueId])
+  @@index([userId])
+}
+
+model AssetHistory {
+  id          String   @id @default(uuid())
+  action      String
+  description String?
+  oldValue    String?
+  newValue    String?
+  assetId     String
+  createdAt   DateTime @default(now())
+  asset       Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
+  @@index([createdAt])
+}
+
+model Notification {
+  id             String           @id @default(uuid())
+  title          String
+  message        String
+  type           NotificationType @default(SYSTEM)
+  isRead         Boolean          @default(false)
+  userId         String
+  organizationId String
+  entityType     String?
+  entityId       String?
+  createdAt      DateTime         @default(now())
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User             @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([organizationId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  action      String
+  entityType  String
+  entityId    String?
+  description String?
+  metadata    Json?
+  userId      String
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([entityType])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id             String       @id @default(uuid())
+  action         String
+  entityType     String
+  entityId       String?
+  oldData        Json?
+  newData        Json?
+  ipAddress      String?
+  userAgent      String?
+  userId         String?
+  organizationId String
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User?        @relation(fields: [userId], references: [id])
+
+  @@index([organizationId])
+  @@index([userId])
+  @@index([entityType])
+  @@index([createdAt])
+}
+
+model Report {
+  id             String       @id @default(uuid())
+  name           String
+  description    String?
+  type           String
+  filters        Json?
+  data           Json?
+  fileUrl        String?
+  fileType       String?
+  organizationId String
+  createdById    String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  createdBy      User         @relation(fields: [createdById], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([createdById])
+  @@index([type])
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ORGANIZATION_ADMIN
+  MAINTENANCE_MANAGER
+  TECHNICIAN
+  EMPLOYEE
+  VIEWER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  SUSPENDED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum WorkOrderStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum IssueStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  REOPENED
+}
+
+enum MaintenanceType {
+  PREVENTIVE
+  CORRECTIVE
+  PREDICTIVE
+  EMERGENCY
+}
+
+enum AssetStatus {
+  OPERATIONAL
+  ISSUE_REPORTED // new issue submitted, not yet triaged by a technician
+  UNDER_INSPECTION // technician has started inspecting
+  UNDER_MAINTENANCE
+  OUT_OF_ORDER
+  DECOMMISSIONED
+  RESERVED
+}
+
+enum NotificationType {
+  MAINTENANCE_DUE
+  MAINTENANCE_OVERDUE
+  ISSUE_CREATED
+  ISSUE_ASSIGNED
+  WORK_ORDER_CREATED
+  WORK_ORDER_COMPLETED
+  ASSET_STATUS_CHANGED
+  SYSTEM
+  REMINDER
+}
